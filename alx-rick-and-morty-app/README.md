@@ -1,40 +1,129 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+Rick and Morty App – Error Handling & Monitoring
 
-## Getting Started
+This project is part of the ALX GraphQL projects. It extends the Rick and Morty app to introduce error handling and monitoring using an Error Boundary component and external logging (Sentry).
 
-First, run the development server:
+📂 Repository Details
 
-```bash
+GitHub Repository: alx-graphql-0x03
+
+Directory: alx-rick-and-morty-app
+
+Key Files:
+
+components/ErrorBoundary.tsx
+
+pages/_app.tsx
+
+components/ErrorProneComponent.tsx
+
+package.json
+
+README.md
+
+📝 Tasks Completed
+0. Create the ErrorBoundary Component
+
+Objective: Implement an ErrorBoundary class component in TypeScript that can catch and handle JavaScript errors in the app.
+
+Added components/ErrorBoundary.tsx with the following functionality:
+
+Tracks whether an error has occurred using state.hasError.
+
+Uses getDerivedStateFromError to update state when an error is caught.
+
+Implements componentDidCatch to log errors to the console.
+
+Renders a fallback UI with a retry button when errors occur.
+
+✅ Verified by running npm run dev and testing at http://localhost:3000.
+
+1. Wrap the Application with ErrorBoundary
+
+Objective: Ensure the entire app is protected by the ErrorBoundary.
+
+Updated pages/_app.tsx:
+
+Imported ErrorBoundary.
+
+Wrapped <Component {...pageProps} /> with <ErrorBoundary>.
+
+This ensures that any unhandled error in child components is caught at the top level.
+
+✅ Verified by starting the app and observing fallback UI on simulated errors.
+
+2. Create a Component to Test ErrorBoundary
+
+Objective: Build a component that intentionally throws an error to confirm the ErrorBoundary works.
+
+Added components/ErrorProneComponent.tsx:
+
+const ErrorProneComponent: React.FC = () => {
+  throw new Error('This is a test error!');
+};
+export default ErrorProneComponent;
+
+
+Imported and rendered inside pages/index.tsx within an <ErrorBoundary>.
+
+Confirmed that the fallback UI was displayed instead of a crash.
+
+✅ Verified with local testing in the browser.
+
+3. Monitor and Log Errors
+
+Objective: Integrate an external error monitoring service (Sentry).
+
+Installed Sentry:
+
+npm install @sentry/react @sentry/nextjs
+
+
+Updated ErrorBoundary.tsx:
+
+import * as Sentry from '@sentry/react';
+componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+  Sentry.captureException(error, { extra: errorInfo });
+}
+
+
+Confirmed that errors from ErrorProneComponent are logged in Sentry dashboard.
+
+✅ Verified by throwing test errors and checking logs in Sentry.
+
+4. Manual Review
+
+Prepared repo with all required changes:
+
+ErrorBoundary.tsx implemented.
+
+_app.tsx updated to wrap app.
+
+ErrorProneComponent.tsx added for testing.
+
+Sentry integration configured.
+
+Repository ready for review.
+
+🚀 Running Locally
+# Clone the repo
+git clone https://github.com/<your-username>/alx-graphql-0x03.git
+cd alx-graphql-0x03/alx-rick-and-morty-app
+
+# Install dependencies
+npm install
+
+# Run dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Visit the app
+http://localhost:3000
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+✅ Key Learnings
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+How to implement React Error Boundaries in TypeScript.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+How to wrap an entire Next.js app with an error handler.
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+How to test error boundaries with components that throw errors.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+How to integrate Sentry monitoring to capture runtime errors in production.
