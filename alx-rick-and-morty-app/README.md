@@ -1,4 +1,4 @@
-Rick and Morty App – Error Handling & Monitoring
+# Rick and Morty App – Error Handling & Monitoring
 
 This project is part of the ALX GraphQL projects. It extends the Rick and Morty app to introduce error handling and monitoring using an Error Boundary component and external logging (Sentry).
 
